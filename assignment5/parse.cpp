@@ -100,7 +100,7 @@ int updateName(OneEvent* event,
 
 				break;
 			default :
-				assert(false);
+				return -1;
 				break;
 		}
 
