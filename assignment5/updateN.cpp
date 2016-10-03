@@ -1,10 +1,10 @@
 #include "updateN.h"
-#include <assert>
+#include <assert.h>
 
 int updateN(OneEvent* event, uint64 word){
 	uint64 N;
 
-	N = (word >> 32) & 0x0000_0000_0000_0fff;
+	N = (word >> 32) & 0x0000000000000fff;
 
 	if(N >= 0x200){
 		event->type = N & 0xf00;

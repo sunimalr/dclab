@@ -1,6 +1,8 @@
 #ifndef COMMON_H
 #define COMMON_H
 
+#include "basetypes.h"
+
 typedef struct{
 	uint64 t;		// 20-bit time T in 60-125 nsec increments
 	uint32 duration;	//   -unused- this week, 0
