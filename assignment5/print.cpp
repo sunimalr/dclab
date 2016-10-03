@@ -32,5 +32,8 @@ int print_entry(OneEvent* event, std::map<uint32,std::map<uint32,const char *> >
 	cout << "rpcid=" << "N/A" << ",\t";
 	cout << "arg0=" << event->arg0 << ",\t";
 	cout << "return_t=" << event->return_t << ",\t";
-	cout << "retval=" << event->retval << endl;
+	cout << "retval=" << event->retval << ",\t";
+	if(event->name != NULL){
+		cout << "def:name=" << event->name << endl;
+	}
 }
