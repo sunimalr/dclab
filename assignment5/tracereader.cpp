@@ -86,6 +86,9 @@ int main (int argc, const char** argv) {
 				continue;
 			}
 
+			entry->cpu=cpu;
+
+
 			//cout << "read 8 bytes : " << buffer << endl;
 			instream.seekg (0, instream.cur);
     		long test = instream.tellg();
@@ -164,9 +167,11 @@ int main (int argc, const char** argv) {
 				}
 				
 			}
+			
 			print_entry(entry, &name_map);
 			//cout<<"ct :: "<<ct<<endl;
 			ct++;
+			//exit(0);
 		}
 			
        	instream.close();
