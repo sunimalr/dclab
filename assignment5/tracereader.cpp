@@ -11,9 +11,11 @@
 #include <string>
 #include "basetypes.h"
 #include "common.h"
+#include "updateN.h"
 
 using namespace std;
 
+OneEvent* entry;
 
 void Usage() {
   fprintf(stderr, "Usage: tracereader <file name>\n");
@@ -32,22 +34,36 @@ int main (int argc, const char** argv) {
     	long length = instream.tellg();
     	instream.seekg (0, instream.beg);
 	
-		//uint64 buffer=new uint64[1];
-		char * buffer = new char [length];
-		int readlength=64;
-		cout << "Reading " << readlength << " bytes... ";
+		//inFile.read((char*)&buf, 8);
+
+		//uint64 * buffer= new uint64 [length];//=new uint64[1];
+		int readlength=8;
+		int lim=length/readlength;
+		int ct=0;
+		while(ct<lim){
+			
+			uint64 buffer;
+			//char * buffer = new char [readlength];
+			//cout << "Reading " << readlength << " bytes... ";
+			instream.read ((char*)&buffer,readlength);
+			cout << "read 8 bytes : " << buffer << endl;
+			instream.seekg (0, instream.cur);
+    		long test = instream.tellg();
+			
+			
+
+			ct++;
+		}
+		
+    	
     	// read data as a block:
-    	instream.read (buffer,readlength);
-    	if (instream){
-      		cout << "all bytes read successfully." << endl;
-      		
-      		cout << "read : " << out << endl;
-      	}
-    	else
-      		cout << "error: only " << instream.gcount() << " could be read";
+    	
+    	
+    	//else
+      	//	cout << "error: only " << instream.gcount() << " could be read";
     	instream.close();
 
-    	delete[] buffer;
+    	
 		//char * buffer = new char [length];
 	}
 	return 0;
