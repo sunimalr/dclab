@@ -20,19 +20,19 @@ int print_entry(OneEvent* event, std::map<uint32,std::map<uint32,const char *> >
 			cout << "typeName=" << tempStr << ",\t";
 		}
 		else{
-			cout << "type=" << event->type << ",\t";
-			cout << "number=" << event->number << ",\t";
+			cout << "type=0x" << hex << event->type << dec << ",\t";
+			cout << "number=0x" << hex <<  event->number << dec << ",\t";
 		}
 	}
 	else{
-		cout << "type=" << event->type << ",\t";
-		cout << "number=" << event->number << ",\t";
+		cout << "type=0x" << hex << event->type << dec << ",\t";
+		cout << "number=0x" << hex <<  event->number << dec << ",\t";
 	}
 
 	cout << "rpcid=" << "N/A" << ",\t";
-	cout << "arg0=" << event->arg0 << ",\t";
-	cout << "return_t=" << event->return_t << ",\t";
-	cout << "retval=" << event->retval;
+	cout << "arg0=0x" << hex << event->arg0 << dec << ",\t";
+	cout << "return_t=0x" << hex << event->return_t << dec << ",\t";
+	cout << "retval=0x" << hex << event->retval << dec;
 
 	if(event->name != NULL){
 		cout << ",\t" << "def:name=" << event->name << endl;
