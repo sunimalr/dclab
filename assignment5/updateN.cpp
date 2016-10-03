@@ -32,7 +32,7 @@ int updateName(OneEvent* event,
 	           std::vector<uint64> word, 
 	           std::map<uint32,std::map<uint32,const char *> >* nameMap){
 
-	std::string name;
+	std::string* name = new std::string;
 
 	if(event->type == 0x100){
 		assert(word.size() > 0);
@@ -58,15 +58,15 @@ int updateName(OneEvent* event,
 							break;
 						} 
 						else{
-							name.push_back(currName);
+							name->push_back(currName);
 						}
 					}
 				}
 
-				event->name = name.c_str();
+				event->name = name->c_str();
 
 				if(nameMap != NULL){
-					(*nameMap)[event->number][hashNumber] = name.c_str();
+					(*nameMap)[event->number][hashNumber] = name->c_str();
 				}
 
 				//(*nameMap)[event->number][hashNumber]
