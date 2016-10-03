@@ -1,3 +1,6 @@
+//author : Sunimal Rathnayake
+//date : 2016.10.04
+
 #ifndef COMMON_H
 #define COMMON_H
 

@@ -1,3 +1,6 @@
+//author : Manupa Karunaratne
+//date : 2016.10.04
+
 #ifndef __PARSE_H__
 #define __PARSE_H__
 

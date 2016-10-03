@@ -1,3 +1,6 @@
+//author : Manupa Karunaratne
+//date : 2016.10.04
+
 #include "parse.h"
 #include <assert.h>
 #include <string>
