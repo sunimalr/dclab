@@ -35,18 +35,7 @@ int main (int argc, const char** argv) {
 	if (argc < 2) {Usage(); return 0;}
 	const char* filename = argv[1];
 
-	OneEvent *entry;
-	entry = (OneEvent *) malloc (sizeof(OneEvent));
-	entry->t=1000;
-	entry->duration=0;
-	entry->cpu=0;
-	entry->type=0xffff;
-	entry->number=0;
-	entry->rpcid=0;
-	entry->arg0=0;
-	entry->return_t=0;
-	entry->retval=0;
-	entry->name=NULL;
+	
 	
 	ifstream instream (filename, std::ifstream::binary);
 	
@@ -62,8 +51,22 @@ int main (int argc, const char** argv) {
 		int readlength=8;
 		int lim=length/readlength;
 		int ct=0;
+		//cout << "lim : "<<lim<< endl;
 		while(ct<lim){
 			
+			OneEvent *entry;
+			entry = (OneEvent *) malloc (sizeof(OneEvent));
+			entry->t=1000;
+			entry->duration=0;
+			entry->cpu=0;
+			entry->type=0xffff;
+			entry->number=0;
+			entry->rpcid=0;
+			entry->arg0=0;
+			entry->return_t=0;
+			entry->retval=0;
+			entry->name=NULL;
+
 			uint64 buffer;
 			instream.read ((char*)&buffer,readlength);
 
@@ -162,6 +165,7 @@ int main (int argc, const char** argv) {
 				
 			}
 			print_entry(entry, &name_map);
+			//cout<<"ct :: "<<ct<<endl;
 			ct++;
 		}
 			
