@@ -8,7 +8,9 @@
 using namespace std;
 
 int print_entry(OneEvent* event, std::map<uint32,std::map<uint32,const char *> >* nameMap){
-	cout << "dt=" << (event->t << 8) << " cycles,\t";
+	uint64 dt = (event->t);
+	dt = dt << 8;
+	cout << "dt=" << dt << " cycles,\t";
 	cout << "duration=" << "N/A" << ",\t";
 	cout << "cpu=" << event->cpu << ",\t";
 
