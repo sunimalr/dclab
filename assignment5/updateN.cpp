@@ -1,7 +1,8 @@
 #include "updateN.h"
 #include <assert.h>
 
-int updateN(OneEvent* event, uint64 word){
+
+uint64 updateN(OneEvent* event, uint64 word){
 	uint64 N;
 
 	N = (word >> 32) & 0x0000000000000fff;
@@ -23,5 +24,33 @@ int updateN(OneEvent* event, uint64 word){
 		event->number = 0; //no sub-types
 	}
 
-	return 0;
+	return N;
 }
+
+int updateName(OneEvent* event, 
+	           uint64 word, 
+	           std::map<uint32,std::map<uint32,const char *> >* nameMap){
+
+	if(event->type == 0x100){
+		uint64 hashNumber = word & 0x000000000000ffff;
+		switch(event->number){
+			case 0x2 :
+			case 0x4 :
+			case 0x5 :
+			case 0x8 :
+			case 0xC :
+			case 0x3 :
+			case 0x1 :
+				//(*nameMap)[event->number][hashNumber]
+
+				break;
+			default :
+				assert(false);
+		}
+
+		return 0;
+	}
+	event->name = NULL;
+	return -1;
+}
+

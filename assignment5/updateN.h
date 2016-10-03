@@ -3,7 +3,12 @@
 
 #include "common.h"
 #include "basetypes.h"
+#include <map>
+#include <cstddef>
 
-int updateN(OneEvent* event, uint64 word);
+uint64 updateN(OneEvent* event, uint64 word);
+int updateName(OneEvent* event, 
+	           uint64 word, 
+	           std::map<uint32,std::map<uint32,const char *> >* = NULL);
 
 #endif	// __UPDATEN_H__

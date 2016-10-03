@@ -16,5 +16,7 @@ typedef struct{
 	const char *name;	//  NULL if unused, else pointer to a real C string
 } OneEvent;
 
+
+
 #endif // COMMON_H
 
