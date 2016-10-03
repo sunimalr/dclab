@@ -5,8 +5,12 @@
 
 uint64 updateN(OneEvent* event, uint64 word){
 	uint64 N;
+	uint64 T;
 
 	N = (word >> 32) & 0x0000000000000fff;
+	T = (word >> 44) & 0x00000000000fffff;
+
+	event->t = T;
 
 	if(N >= 0x200){
 		event->type = N & 0xf00;
@@ -26,6 +30,29 @@ uint64 updateN(OneEvent* event, uint64 word){
 	}
 
 	return N;
+}
+
+uint64 updateArgRet(OneEvent* event, uint64 word){
+	uint64 N;
+	N = (word >> 32) & 0x0000000000000fff;
+
+	uint64 ret;
+
+	if(N >= 0x400){
+		ret = (word >> 16) & 0x000000000000ffff;
+		if(ret == 0){
+			event->arg0 = word & 0x000000000000ffff;
+			return 2;
+		}
+		else{
+			event->arg0 = word & 0x000000000000ffff;
+			event->retval = (word >> 16) & 0x00000000000000ff;
+			assert(event->type != 0xffff); //check whether t is updated
+			event->return_t = event->t + ((word >> 24) & 0x00000000000000ff);
+			return 0;
+		}
+	}
+	return -1;
 }
 
 int updateName(OneEvent* event, 
