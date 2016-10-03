@@ -11,5 +11,6 @@ uint64 updateN(OneEvent* event, uint64 word);
 int updateName(OneEvent* event, 
 	           std::vector<uint64> word, 
 	           std::map<uint32,std::map<uint32,const char *> >* = NULL);
+uint64 updateArgRet(OneEvent* event, uint64 word);
 
 #endif	// __PARSE_H__
