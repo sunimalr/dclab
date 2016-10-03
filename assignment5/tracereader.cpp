@@ -25,6 +25,7 @@ int main (int argc, const char** argv) {
 	int cpu;
 	uint64 cycle_counter;
 	uint64 gettimeofday_val;
+	std::map<uint32,std::map<uint32,const char *> > name_map; 
 
 	if (argc < 2) {Usage(); return 0;}
 	const char* filename = argv[1];
@@ -33,8 +34,7 @@ int main (int argc, const char** argv) {
 	entry = (OneEvent *) malloc (sizeof(OneEvent));
 	
 	ifstream instream (filename, std::ifstream::binary);
-	//ifstream infilemyfile.open (filename, ios::in | ios::binary);
-
+	
 	if(instream){
 		// get length of file:
     	instream.seekg (0, instream.end);
@@ -56,6 +56,7 @@ int main (int argc, const char** argv) {
 				cpu=(buffer>>56) & 0x00000000000000ff;
 				cycle_counter=buffer & 0x00ffffffffffffff;
 				cout << "cpu : " << cpu << " cycle_counter : " << cycle_counter << endl;
+				entry->cpu=cpu;
 				ct++;
 				continue;
 			}
@@ -94,6 +95,9 @@ int main (int argc, const char** argv) {
 					v.push_back(buffer);
 					ct++;
 				}
+				updateName(entry,v,&name_map);
+				cout << entry->name <<endl;
+
 			}
 			ct++;
 			}
