@@ -1,6 +1,7 @@
+#ifndef COMMON_H
+#define COMMON_H
 
-
-struct OneEvent{
+typedef struct{
 	uint64 t;		// 20-bit time T in 60-125 nsec increments
 	uint32 duration;	//   -unused- this week, 0
 	uint32 cpu;		// copied into each struct from the first word of the block
@@ -11,5 +12,7 @@ struct OneEvent{
 	uint64 return_t;	//  0 if unused
 	uint32 retval;		//  0 if unused
 	const char *name;	//  NULL if unused, else pointer to a real C string
-};
+} OneEvent;
+
+#endif // COMMON_H
 
