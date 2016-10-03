@@ -26,12 +26,22 @@ int main (int argc, const char** argv) {
 	uint64 cycle_counter;
 	uint64 gettimeofday_val;
 	std::map<uint32,std::map<uint32,const char *> > name_map; 
+	std::map<uint64,OneEvent *> unpaired_entry_map;	
 
 	if (argc < 2) {Usage(); return 0;}
 	const char* filename = argv[1];
 
 	OneEvent *entry;
 	entry = (OneEvent *) malloc (sizeof(OneEvent));
+	entry->t=0;
+	entry->duration=0;
+	entry->cpu=0;
+	entry->type=0xffff;
+	entry->number=0;
+	entry->rpcid=0;
+	entry->arg0=0;
+	entry->return_t=0;
+	entry->retval=0;
 	
 	ifstream instream (filename, std::ifstream::binary);
 	
