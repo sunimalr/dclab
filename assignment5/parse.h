@@ -1,5 +1,5 @@
-#ifndef __UPDATEN_H__
-#define __UPDATEN_H__
+#ifndef __PARSE_H__
+#define __PARSE_H__
 
 #include "common.h"
 #include "basetypes.h"
@@ -12,4 +12,4 @@ int updateName(OneEvent* event,
 	           std::vector<uint64> word, 
 	           std::map<uint32,std::map<uint32,const char *> >* = NULL);
 
-#endif	// __UPDATEN_H__
+#endif	// __PARSE_H__
