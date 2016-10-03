@@ -46,6 +46,7 @@ int main (int argc, const char** argv) {
 	entry->arg0=0;
 	entry->return_t=0;
 	entry->retval=0;
+	entry->name=NULL;
 	
 	ifstream instream (filename, std::ifstream::binary);
 	
