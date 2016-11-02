@@ -1,17 +1,16 @@
 function parseTrace(lines){
-	var entries = {};
-    var lines = this.result.split('\n');
+	  var entries = {};
     for(var line = 0; line < lines.length; line++){
 
-    	if(!lines[line]){
-    		continue;
-    	}
+      	if(!lines[line]){
+      		continue;
+      	}
 
       	var words = lines[line].split(',');
 
-      	console.log(words);
+      	// console.log(words);
       	if(words.length != 6){
-      		console.log("entry length is not 6!, not parsing";
+      		console.log("entry length is not 6!, not parsing");
       		return;
       	}
 
