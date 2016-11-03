@@ -1,14 +1,15 @@
 var lineWidth = 2; // the width of idle line.
 var seperatorWidth = 1; // the width of white lines at each time tag points.
-var seperatorDistance = 100;
+
 var bigBoxWidth = 30; // the vertical length of box.
 var smallBoxWidth = 20;
 var innerBoxWidthRatio = 0.4; // in a two color box, width(innerBox) = 0.4 * width(outerBox).
 var cpuLineMargin = 50; // the blank spaces between two cpu lines.
-var maxLength = 2000;
+var maxLength = 200000;
  lineheight=2;
 var horizontalpadding=200;
-var hundredNanotoPixel=5;
+var hundredNanotoPixel=0.01;
+var seperatorDistance = hundredNanotoPixel*1000;
 //100 nanosecond = 5 pixels
 
 // Generate a event box. offsetTop is added to the vertical absolute position of the box.
@@ -24,13 +25,15 @@ function appendEvent(event) {
 }
 
 function plot(entries){
-	var events_1=[[0,1300,1500,200,46,"hjds"],[0,1300,1500,200,46,"hjds"],[0,1300,1500,200,46,"hjds"]]
-
+	//var events_1=[[0,1300,1500,200,46,"hjds"],[0,1300,1500,200,46,"hjds"],[0,1300,1500,200,46,"hjds"]]
 	var content = "<svg style=\"width:" + maxLength + "; height:" + (bigBoxWidth + cpuLineMargin) * 5 + "\">";
-	var events0 = [[0,100,100,"line"],[100,100,50,"smallBox"],[150,100,100,"line"],[250,100,2,"line"],[252,100,8,"smallBox"], [260,100,40,"bigBox"], [300, 100,50,"line"],[350,100,100,"smallBox"],[450,100,50,"bigBox"],[500,100,50,"line"]]
-	var events1 = [[1,100,0,100,0x45,"lline"],[0,200,0,30,0x36,"linde"],[1,250,0,100,0x23,"lihne"],[1,350,0,30,0xd,"lihne"],[1,380,0,10,0xc,"lines"]]
-	var events0 = [[0,100,0,10,0x4,"lines"],[0,200,0,30,0x23,"lihne"],[0,250,0,100,0x33,"linhe"],[0,350,0,30,0x12,"lkne"],[0,380,0,100,0x34,"lines"]]
+	//var events0 = [[0,100,100,"line"],[100,100,50,"smallBox"],[150,100,100,"line"],[250,100,2,"line"],[252,100,8,"smallBox"], [260,100,40,"bigBox"], [300, 100,50,"line"],[350,100,100,"smallBox"],[450,100,50,"bigBox"],[500,100,50,"line"]]
+	//var events1 = [[1,100,0,100,0x45,"lline"],[0,200,0,30,0x36,"linde"],[1,250,0,100,0x23,"lihne"],[1,350,0,30,0xd,"lihne"],[1,380,0,10,0xc,"lines"]]
+	//var events0 = [[0,100,0,10,0x4,"lines"],[0,200,0,30,0x23,"lihne"],[0,250,0,100,0x33,"linhe"],[0,350,0,30,0x12,"lkne"],[0,380,0,100,0x34,"lines"]]
 	//,[252,100,8,"smallBox"], [260,100,40,"bigBox"], [300, 100,50,"line"],[350,100,100,"smallBox"],[450,100,50,"bigBox"],[500,100,50,"line"]]
+
+	var events0=generateCoordinates(entries[0]);
+	var events1=generateCoordinates(entries[1]);
 
 
 	events0=processCoordinates(events0);
@@ -74,7 +77,7 @@ function handleFileSelect(evt){
 		//fileDisplayArea.innerText = reader.result;
 	    var lines = this.result.split('\n');
 	    entries = parseTrace(lines);
-	    console.log(entries[3][1][1]);
+	    console.log(entries[2][1][1]);
 	    plot(entries);
 	}
 	reader.readAsText(evt.target.files[0]);	

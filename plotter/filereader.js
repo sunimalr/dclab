@@ -27,6 +27,7 @@ function processCoordinates(eventList){
 		eventList[i][1]+=horizontalpadding;
 		eventList[i][2]+=verticalpadding;
 		var lineEvent=[];
+		console.log(eventList[i][0],eventList[i][1],eventList[i][2],eventList[i][3]);
 	}
 
 	return eventList;
@@ -40,7 +41,8 @@ function generateCoordinates(inputlist){
 	for (i = 0; i < inputlist.length; i++) {
 		inputlist[i][1]=(inputlist[i][1]/100)*hundredNanotoPixel;
 		inputlist[i][2]=0;	
-		inputlist[i][3]=(inputlist[i][1]/100)*hundredNanotoPixel;
+		inputlist[i][3]=(inputlist[i][3]/100)*hundredNanotoPixel;
+		//console.log(inputlist[i][1],inputlist[i][2],inputlist[i][3]);
 	}
 	return inputlist;
 }
