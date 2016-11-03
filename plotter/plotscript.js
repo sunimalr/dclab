@@ -9,7 +9,7 @@ var maxLength = 20000;
 var maxHeight = 500;
 var lineheight=2;
 var horizontalpadding=200;
-var hundredNanotoPixel=0.01;
+var hundredNanotoPixel= 0.01;
 var seperatorDistance = hundredNanotoPixel*1000;
 //100 nanosecond = 5 pixels
 
@@ -20,7 +20,7 @@ function appendEvent(event) {
 	if (type == "line") {
 	}
 	else {
-		return drawRectangle(event[1],event[2],event[3]);
+		return drawRectangle(event[1],event[2],event[3],event[4]);
 	}
 }
 
@@ -48,7 +48,7 @@ function plot(entries){
 	    	// Append a event at the end of CPU 0, vertical position offset = 0 * one line.
 			content += appendEvent(events[key][i]);
 			var textposition=125+key*100;
-			console.log(textposition);
+			//console.log(textposition);
 			var textcontent= "<text x=\"60\" y=\""+textposition+"\" font-size=\"20px\"> CPU " + key + "</text>" //"<text x=\"20\" y=\"20\" font-family=\"sans-serif\" font-size=\"20px\" fill=\"black\">CPU" + key "</text>";
 			content+="<svg width=\"150\" height=\"1000\">" + textcontent +" </svg>"			
 		}		
@@ -79,5 +79,7 @@ function handleFileSelect(evt){
 	    plot(entries);
 	}
 	reader.readAsText(evt.target.files[0]);	
+	//hundredNanotoPixel=parseInt(document.getElementById('txtResolution')[0].value);	
+	//console.log(hundredNanotoPixel);
 }
 document.getElementById('files').addEventListener('change', handleFileSelect, false);

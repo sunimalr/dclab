@@ -18,7 +18,7 @@ function parseTrace(lines){
       	var starttime = parseInt(words[1]);
       	var endtime = parseInt(words[2]);
       	var duration = parseInt(words[3]);
-      	var type = parseInt(words[4],16);
+      	var type = parseInt(words[4],16);//Hex to integer
       	var name = words[5];
 
       	if(!(cpu in entries)){
