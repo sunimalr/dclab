@@ -27,7 +27,7 @@ function processCoordinates(eventList){
 		eventList[i][1]+=horizontalpadding;
 		eventList[i][2]+=verticalpadding;
 		var lineEvent=[];
-		console.log(eventList[i][0],eventList[i][1],eventList[i][2],eventList[i][3]);
+		//console.log(eventList[i][0],eventList[i][1],eventList[i][2],eventList[i][3]);
 	}
 
 	return eventList;
