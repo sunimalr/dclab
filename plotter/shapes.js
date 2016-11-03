@@ -106,9 +106,9 @@ function getColor2(eventCode){
 function getColor3(eventCode){
 	var thirddigit=eventCode & 0xF;	
 
-	var green=((thirddigit+5) * 14) % 255;
-	var blue=((thirddigit+6) * 2) % 128;
-	var red=((thirddigit+7) * 23) % 128;
+	var green=((thirddigit+5) * 3) % 255;
+	var blue=((thirddigit+6) * 2) % 255;
+	var red=((thirddigit+12) * 8) % 255;
 	var colorString="rgb("+red+","+green+","+blue+")";
 	//console.log(colorString); 
 	return colorString;

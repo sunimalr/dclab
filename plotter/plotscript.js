@@ -5,11 +5,11 @@ var bigBoxWidth = 30; // the vertical length of box.
 var smallBoxWidth = 20;
 var innerBoxWidthRatio = 0.4; // in a two color box, width(innerBox) = 0.4 * width(outerBox).
 var cpuLineMargin = 50; // the blank spaces between two cpu lines.
-var maxLength = 20000;
+var maxLength = 80000;
 var maxHeight = 500;
 var lineheight=2;
 var horizontalpadding=200;
-var hundredNanotoPixel= 0.01;
+var hundredNanotoPixel= 0.1;
 var seperatorDistance = hundredNanotoPixel*1000;
 //100 nanosecond = 5 pixels
 
