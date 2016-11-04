@@ -100,7 +100,45 @@ function getColor2(eventCode){
 	var blue=((seconddigit+7) * 23) % 128;
 	var colorString="rgb("+red+","+green+","+blue+")";
 	//console.log(colorString); 
-	return colorString;
+	
+	switch (seconddigit){
+		
+		case 0 : return "rgb(96,31,247)";
+				break;	
+		case 1 : return "rgb(50,0,102)";
+				break;
+		case 2 : return "rgb(0,51,102)";
+				break;
+		case 3 : return "rgb(0,102,0)";
+				break;
+		case 4 : return "rgb(102,51,0)";
+				break;
+		case 5 : return "rgb(204,0,0)";
+				break;
+		case 6 : return "rgb(204,0,153)";
+				break;
+		case 7 : return "rgb(0,255,0)";
+				break;
+		case 8 : return "rgb(255,255,0)";
+				break;
+		case 9 : return "rgb(255,255,0)";
+				break;
+		case 10 : return "rgb(0,255,153)";
+				break;
+		case 11 : return "rgb(0,255,153)";
+				break;
+		case 12 : return "rgb(255,102,0)";
+				break;
+		case 13 : return "rgb(255,102,0)";
+				break;
+		case 14 : return "rgb(128,23,65)";
+				break;
+		case 15 : return "rgb(140,140,140)";
+				break;	
+	}
+
+
+	//return colorString;
 }
 
 function getColor3(eventCode){
@@ -110,8 +148,45 @@ function getColor3(eventCode){
 	var blue=((thirddigit+6) * 2) % 255;
 	var red=((thirddigit+12) * 8) % 255;
 	var colorString="rgb("+red+","+green+","+blue+")";
-	//console.log(colorString); 
-	return colorString;
+	//console.log(colorString);
+
+	switch (thirddigit){
+		
+		case 0 : return "rgb(96,31,247)";
+				break;	
+		case 1 : return "rgb(50,0,102)";
+				break;
+		case 2 : return "rgb(0,51,102)";
+				break;
+		case 3 : return "rgb(0,102,0)";
+				break;
+		case 4 : return "rgb(102,51,0)";
+				break;
+		case 5 : return "rgb(204,0,0)";
+				break;
+		case 6 : return "rgb(204,0,153)";
+				break;
+		case 7 : return "rgb(0,255,0)";
+				break;
+		case 8 : return "rgb(255,255,0)";
+				break;
+		case 9 : return "rgb(255,255,0)";
+				break;
+		case 10 : return "rgb(0,255,153)";
+				break;
+		case 11 : return "rgb(0,255,153)";
+				break;
+		case 12 : return "rgb(255,102,0)";
+				break;
+		case 13 : return "rgb(255,102,0)";
+				break;
+		case 14 : return "rgb(128,23,65)";
+				break;
+		case 15 : return "rgb(140,140,140)";
+				break;	
+	}
+
+	//return colorString;
 }
 
 

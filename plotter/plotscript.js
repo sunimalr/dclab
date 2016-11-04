@@ -5,12 +5,13 @@ var bigBoxWidth = 30; // the vertical length of box.
 var smallBoxWidth = 20;
 var innerBoxWidthRatio = 0.4; // in a two color box, width(innerBox) = 0.4 * width(outerBox).
 var cpuLineMargin = 50; // the blank spaces between two cpu lines.
-var maxLength = 80000;
+var maxLength = 8000000;
 var maxHeight = 500;
 var lineheight=2;
 var horizontalpadding=200;
-var hundredNanotoPixel= 0.1;
+var hundredNanotoPixel= 0.01;
 var seperatorDistance = hundredNanotoPixel*1000;
+var startTime=0;
 //100 nanosecond = 5 pixels
 
 // Generate a event box. offsetTop is added to the vertical absolute position of the box.
@@ -20,7 +21,9 @@ function appendEvent(event) {
 	if (type == "line") {
 	}
 	else {
-		return drawRectangle(event[1],event[2],event[3],event[4]);
+		if(event[3]>0 && event[1]<startTime){
+			return drawRectangle(event[1],event[2],event[3],event[4]);
+		}
 	}
 }
 
@@ -36,11 +39,14 @@ function plot(entries){
 	}
 
 	var line = [];
-
+	var finalpoint;
 	for (key in entries) {
 		line[key]=events[key][0];
-		content+=drawLine(line[key][1],line[key][2]+20,events[key][events[key].length-2][1],lineheight);
 		maxLength=events[key][events[key].length-2][1];
+		finalpoint=((maximumStart-minimumStart[0])/100)*hundredNanotoPixel;
+		//content+=drawLine(line[key][1],line[key][2]+20,events[key][events[key].length-2][1],lineheight);
+		content+=drawLine(horizontalpadding,line[key][2]+20,finalpoint,lineheight);
+		console.log("finalpoint : "+finalpoint+" old: "+events[key][events[key].length-2][1]);
 	}
 
 	for (key in entries) {
@@ -55,13 +61,13 @@ function plot(entries){
 	}
 
 	// Draw the vertical white time tag line.
-	for (i = horizontalpadding; i < maxLength; i += seperatorDistance)
+	for (i = horizontalpadding; i < finalpoint; i += seperatorDistance)
 		content += drawTicks(i, 100, seperatorWidth,40);
-	for (i = horizontalpadding; i < maxLength; i += seperatorDistance)
+	for (i = horizontalpadding; i < finalpoint; i += seperatorDistance)
 		content += drawTicks(i, 200, seperatorWidth,40);
-	for (i = horizontalpadding; i < maxLength; i += seperatorDistance)
+	for (i = horizontalpadding; i < finalpoint; i += seperatorDistance)
 		content += drawTicks(i, 300, seperatorWidth,40);
-	for (i = horizontalpadding; i < maxLength; i += seperatorDistance)
+	for (i = horizontalpadding; i < finalpoint; i += seperatorDistance)
 		content += drawTicks(i, 400, seperatorWidth,40);
 
 	content += "</svg>"; 
@@ -75,7 +81,7 @@ function handleFileSelect(evt){
 		//fileDisplayArea.innerText = reader.result;
 	    var lines = this.result.split('\n');
 	    entries = parseTrace(lines);
-	    console.log(entries[2][1][1]);
+	    //console.log(entries[2][1][1]);
 	    plot(entries);
 	}
 	reader.readAsText(evt.target.files[0]);	
