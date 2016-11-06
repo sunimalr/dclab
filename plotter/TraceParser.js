@@ -1,4 +1,4 @@
-var minimumStart = [99999999999,99999999999,99999999999,99999999999];
+var minimumStart = 99999999999; //[99999999999,99999999999,99999999999,99999999999];
 var maximumStart =0;// = [0,0,0,0];
 
 function parseTrace(lines){
@@ -25,8 +25,8 @@ function parseTrace(lines){
       	var type = parseInt(words[4],16);//Hex to integer
       	var name = words[5];
 
-      	if(minimumStart[cpu]>starttime){
-      		minimumStart[cpu]=starttime;
+      	if(minimumStart>starttime){
+      		minimumStart=starttime;
       	}
       	if(maximumStart<starttime){
       		maximumStart=starttime;
@@ -38,7 +38,8 @@ function parseTrace(lines){
       	entries[cpu].push([cpu,starttime,endtime,duration,type,name]);
       	//console.log(starttime);
     }
-    console.log(minimumStart[0] + " , " + minimumStart[1] + " , " + minimumStart[2] + " , " + minimumStart[3]);
+    console.log(minimumStart);
+    //console.log(minimumStart[0] + " , " + minimumStart[1] + " , " + minimumStart[2] + " , " + minimumStart[3]);
     //console.log("finalpoint : "+maximumStart);
     return entries;
 }
