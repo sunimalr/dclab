@@ -45,7 +45,7 @@ function plot(entries){
 	for (key in entries) {
 		line[key]=events[key][0];
 		maxLength=events[key][events[key].length-2][1];
-		finalpoint=((maximumStart-minimumStart[0])/100)*hundredNanotoPixel;
+		finalpoint=((maximumStart-minimumStart)/100)*hundredNanotoPixel;
 		//content+=drawLine(line[key][1],line[key][2]+20,events[key][events[key].length-2][1],lineheight);
 		content+=drawLine(horizontalpadding,line[key][2]+20,finalpoint,lineheight);
 		console.log("finalpoint : "+finalpoint+" old: "+events[key][events[key].length-2][1]);

@@ -2,7 +2,7 @@
 //Event list read from file is processed here to arrange coordinates as necessary
 function processCoordinates(eventList){
 	
-	startTime=(minimumStart[eventList[0][0]]/100)*hundredNanotoPixel;
+	startTime=(minimumStart/100)*hundredNanotoPixel;
 	var end=eventList[eventList.length-1]-startTime;
 	var verticalpadding=0;
 	
