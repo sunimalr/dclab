@@ -10,7 +10,7 @@ var maxHeight = 500;
 var lineheight=2;
 var horizontalpadding=200;
 var hundredNanotoPixel= 0.01;
-var seperatorDistance = hundredNanotoPixel*100000;
+var seperatorDistance = hundredNanotoPixel*10000;
 var startTime=0;
 var textHeight=20;
 
@@ -65,7 +65,7 @@ function plot(entries){
 	// Draw the vertical white time tag line.
 	for (i = horizontalpadding; i < finalpoint; i += seperatorDistance){
 		content += drawTicks(i, 100, seperatorWidth,40);
-		content += "<text x=\"" + i + "\" y=\"" + 90 + "\" font-size=\"10px\" fill=\"black\">" + (startTime+i*seperatorDistance*10000000)/(10000000) + "ms</text>";
+		content += "<text x=\"" + i + "\" y=\"" + 90 + "\" font-size=\"10px\" fill=\"black\">" + i/seperatorDistance + "ms</text>";
 	}
 		
 	for (i = horizontalpadding; i < finalpoint; i += seperatorDistance)
