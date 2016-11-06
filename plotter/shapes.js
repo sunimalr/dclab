@@ -1,5 +1,5 @@
 // Draw a width * height rectangle with color at position (x, y).
-var legendStarty=500;
+var legendStarty=400;
 var legendCurrenty=legendStarty;
 
 function colorRGB(colorName) {
@@ -66,7 +66,9 @@ function drawRectangle(x, y, width, eventCode, eventName){
       		legendContent+=drawSubRectangle1(legendStartx+300,legendCurrenty+y1,30,h1,c1);
 			legendContent=legendContent+drawSubRectangle2(legendStartx+300,legendCurrenty+y2,30,h2,c2);
 			legendContent=legendContent+drawSubRectangle3(legendStartx+300,legendCurrenty+y3,30,h3,c3);
-			legendContent+="<text x=\"" + legendStartx+200 + "\" y=\"" + legendCurrenty+y3 + "\" font-size=\"20px\" fill=\"black\">" + eventName + " </text>";
+			var textposy=legendCurrenty+y3+5;
+			var textposx=legendStartx+50;
+			legendContent+= "<text x=\"" + textposx + "\" y=\"" + textposy +  "\" font-size=\"20px\" fill=\"black\">" + eventName + " </text>";
 			legend[eventName].push(legendContent);
 			legendCurrenty+=45;
       		console.log(legendContent);
