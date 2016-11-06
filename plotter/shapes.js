@@ -1,4 +1,6 @@
 // Draw a width * height rectangle with color at position (x, y).
+var legendStarty=500;
+var legendCurrenty=legendStarty;
 
 function colorRGB(colorName) {
 	if (colorName == "blue") return "rgb(0,0,255)";
@@ -36,8 +38,10 @@ function drawTicks(x, y, width, height) {
 		+ height + "\" style=\"fill:" + colorRGB(color) + ";stroke-width:3\" />"
 }
 
-function drawRectangle(x, y, width, eventCode){
-
+function drawRectangle(x, y, width, eventCode, eventName){
+	
+	var legendContent;
+	var legendStartx=100;
 	
 
 	var h1=40;
@@ -55,6 +59,16 @@ function drawRectangle(x, y, width, eventCode){
 	recContent=drawSubRectangle1(x,y1,width,h1,c1);
 	recContent=recContent+drawSubRectangle2(x,y2,width,h2,c2);
 	recContent=recContent+drawSubRectangle3(x,y3,width,h3,c3);
+
+	if(!(eventName in legend)){
+      		entries[eventName] = [];
+      		legendContent=drawSubRectangle1(legendStartx,legendCurrenty+y1,width,h1,c1);
+			legendContent=legendContent+drawSubRectangle2(legendStartx,legendCurrenty+y2,width,h2,c2);
+			legendContent=legendContent+drawSubRectangle3(legendStartx,legendCurrenty+y3,width,h3,c3);
+			entries[eventName].push(legendContent);
+			legendCurrenty+=45;
+      	}
+
 	return recContent;	
 }
 

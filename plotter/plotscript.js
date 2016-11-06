@@ -13,6 +13,7 @@ var hundredNanotoPixel= 0.01;
 var seperatorDistance = hundredNanotoPixel*10000;
 var startTime=0;
 var textHeight=20;
+var legend = {};
 
 //100 nanosecond = 5 pixels
 
@@ -24,7 +25,7 @@ function appendEvent(event) {
 	}
 	else {
 		if(event[3]>0 && event[1]<startTime){
-			return drawRectangle(event[1],event[2],event[3],event[4]);
+			return drawRectangle(event[1],event[2],event[3],event[4],event[5]);
 		}
 	}
 }
