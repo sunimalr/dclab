@@ -1,5 +1,5 @@
 var lineWidth = 2; // the width of idle line.
-var seperatorWidth = 0.5; // the width of white lines at each time tag points.
+var seperatorWidth = 2; // the width of white lines at each time tag points.
 
 var bigBoxWidth = 30; // the vertical length of box.
 var smallBoxWidth = 20;
@@ -10,8 +10,10 @@ var maxHeight = 500;
 var lineheight=2;
 var horizontalpadding=200;
 var hundredNanotoPixel= 0.01;
-var seperatorDistance = hundredNanotoPixel*1000;
+var seperatorDistance = hundredNanotoPixel*100000;
 var startTime=0;
+var textHeight=20;
+
 //100 nanosecond = 5 pixels
 
 // Generate a event box. offsetTop is added to the vertical absolute position of the box.
@@ -61,8 +63,11 @@ function plot(entries){
 	}
 
 	// Draw the vertical white time tag line.
-	for (i = horizontalpadding; i < finalpoint; i += seperatorDistance)
+	for (i = horizontalpadding; i < finalpoint; i += seperatorDistance){
 		content += drawTicks(i, 100, seperatorWidth,40);
+		content += "<text x=\"" + i + "\" y=\"" + 90 + "\" font-size=\"10px\" fill=\"black\">" + (startTime+i*seperatorDistance*10000000)/(10000000) + "ms</text>";
+	}
+		
 	for (i = horizontalpadding; i < finalpoint; i += seperatorDistance)
 		content += drawTicks(i, 200, seperatorWidth,40);
 	for (i = horizontalpadding; i < finalpoint; i += seperatorDistance)
