@@ -40,7 +40,7 @@ function drawTicks(x, y, width, height) {
 
 function drawRectangle(x, y, width, eventCode, eventName){
 	
-	var legendContent;
+	var legendContent="";
 	var legendStartx=100;
 	
 
@@ -61,12 +61,15 @@ function drawRectangle(x, y, width, eventCode, eventName){
 	recContent=recContent+drawSubRectangle3(x,y3,width,h3,c3);
 
 	if(!(eventName in legend)){
-      		entries[eventName] = [];
-      		legendContent=drawSubRectangle1(legendStartx,legendCurrenty+y1,width,h1,c1);
-			legendContent=legendContent+drawSubRectangle2(legendStartx,legendCurrenty+y2,width,h2,c2);
-			legendContent=legendContent+drawSubRectangle3(legendStartx,legendCurrenty+y3,width,h3,c3);
-			entries[eventName].push(legendContent);
+			//console.log("legend entry");
+      		legend[eventName] = [];
+      		legendContent+=drawSubRectangle1(legendStartx+300,legendCurrenty+y1,30,h1,c1);
+			legendContent=legendContent+drawSubRectangle2(legendStartx+300,legendCurrenty+y2,30,h2,c2);
+			legendContent=legendContent+drawSubRectangle3(legendStartx+300,legendCurrenty+y3,30,h3,c3);
+			legendContent+="<text x=\"" + legendStartx+200 + "\" y=\"" + legendCurrenty+y3 + "\" font-size=\"20px\" fill=\"black\">" + eventName + " </text>";
+			legend[eventName].push(legendContent);
 			legendCurrenty+=45;
+      		console.log(legendContent);
       	}
 
 	return recContent;	

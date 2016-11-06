@@ -6,7 +6,7 @@ var smallBoxWidth = 20;
 var innerBoxWidthRatio = 0.4; // in a two color box, width(innerBox) = 0.4 * width(outerBox).
 var cpuLineMargin = 50; // the blank spaces between two cpu lines.
 var maxLength = 8000000;
-var maxHeight = 500;
+var maxHeight = 3000;
 var lineheight=2;
 var horizontalpadding=200;
 var hundredNanotoPixel= 0.01;
@@ -75,6 +75,13 @@ function plot(entries){
 		content += drawTicks(i, 300, seperatorWidth,40);
 	for (i = horizontalpadding; i < finalpoint; i += seperatorDistance)
 		content += drawTicks(i, 400, seperatorWidth,40);
+
+	//Draw legend
+
+	for (eventName in legend){
+		content+=legend[eventName];
+		console.log(eventName);
+	}
 
 	content += "</svg>"; 
 	document.getElementById("plotSVG").innerHTML = content;
