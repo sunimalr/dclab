@@ -189,16 +189,28 @@ int main (int argc, const char** argv) {
   double y=0;
   double denom = 0;
   double nom = 0;
+  double initTime = -1;
+  double initCycle = -1;
   //Calculate Regresssion Line, X = cycles; Y = time
   while (fread(traceblock, 1, sizeof(traceblock), f) != 0) {
-      y = traceblock[1];
-      x = traceblock[0] & 0x00ffffffffffffff;
+	  if(initTime == -1){
+		  initTime = traceblock[1];
+		  initCycle = traceblock[0] & 0x00ffffffffffffff;
+	  }
+      y = traceblock[1] - initTime;
+      x = (traceblock[0] & 0x00ffffffffffffff) - initCycle;
       sigmaX += x;
       sigmaY += y;
       sigmaXY += x*y;
       sigmaX2 += x*x;
       N++;
   }
+
+  double scale = 1;
+  sigmaX = sigmaX/scale;
+  sigmaY = sigmaY/scale;
+  sigmaXY = sigmaXY/(scale*scale);
+  sigmaX2 = sigmaX2/(scale*scale);
 
   fprintf(stdout, "sigmaX = %f\n", sigmaX);
   fprintf(stdout, "sigmaY = %f\n", sigmaY);
@@ -331,10 +343,19 @@ int main (int argc, const char** argv) {
         fprintf(stdout, "[%3d] [%02lld.%02lld ... %02lld.%02lld] %lld %03llx %08llx %s\n", i, callTime.first, callTime.second ,tsec, t, current_cpu, n, arg, name.c_str());
         u64 difft = t - callTime.second;
         u64 difftsec = tsec - callTime.first;
-        if(difft < 0){
-        	difft += 10000000;
+        if(t < callTime.second){
+        	difft = 10000000 + t - callTime.second;
         	difftsec--;
+            if(tsec < callTime.first - 1){ // we are not logging events large than a minute
+            	difftsec = 60 + tsec - callTime.first - 1;
+            }
         }
+        else{
+        	if(tsec < callTime.first){ // we are not logging events large than a minute
+        		difftsec = 60 + tsec - callTime.first;
+        	}
+        }
+
         fprintf(fout,"%lld,%011lld,%011lld,%011lld,%03llx,%s\n",current_cpu, nanoSeconds(callTime.first,callTime.second), nanoSeconds(tsec, t) , nanoSeconds(difftsec, difft) ,n, name.c_str());
       }
       else{
