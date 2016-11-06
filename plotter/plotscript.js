@@ -24,7 +24,7 @@ function appendEvent(event) {
 	if (type == "line") {
 	}
 	else {
-		if(event[3]>0 && event[1]<startTime){
+		if((event[5]!="poll")&&(event[5]!="select")&&event[3]>0 && event[1]<startTime){
 			return drawRectangle(event[1],event[2],event[3],event[4],event[5]);
 		}
 	}
