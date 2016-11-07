@@ -225,7 +225,13 @@ int main (int argc, const char** argv) {
   fprintf(stdout, "nom = %f\n", nom);
 
   cycle256Period =  (u64)(nom*256.0*1000/denom);
-  fprintf(stdout, "256 Cycles Period = %lld\n", cycle256Period);
+  if(cycle256Period == 0){
+	  cycle256Period = 73;
+	  fprintf(stdout, "256 Cycles Period was zero, hence setting to %lld\n", cycle256Period);
+  }
+  else{
+	  fprintf(stdout, "256 Cycles Period = %lld\n", cycle256Period);
+  }
 
   fseek(f,0,SEEK_SET);
 
