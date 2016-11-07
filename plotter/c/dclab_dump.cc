@@ -10,6 +10,7 @@
 #include <vector>
 #include <string>
 #include <algorithm>
+#include <set>
 
 #include <stdio.h>
 #include <stdlib.h>     // exit
@@ -73,6 +74,7 @@ using std::map;
 using std::vector;
 using std::pair;
 using std::make_pair;
+using std::set;
 
 // Number of u64 values per trace block
 static const int kTraceBufSize = 8192;
@@ -238,10 +240,11 @@ int main (int argc, const char** argv) {
   double time;
   u64 cycleIncrement;
 
-  map<u64,map<u64,pair<u64,u64> > > eventMap;
+  map<u64,map<u64,map<u64,pair<u64,u64> > > > eventMap;
   vector<traceblock_t> traceblocks;
 
-
+  u64 currentPID = 0;
+  set<u64> legalPIDs;
 
   while (fread(traceblock, 1, sizeof(traceblock), f) != 0) {
     fprintf(stdout, "[0] %016llx\n", traceblock[0]);
@@ -301,16 +304,20 @@ int main (int argc, const char** argv) {
       pair<u64,u64> callTime;
       bool callFound = false;
 
+      if(n == 0x200){
+    	  currentPID = arg & 0xffff;
+      }
+
       //9th bit distinguish whether its a call or return
       u64 isRet = (n >> 9) & 1;
       if(isRet == 0)
       {
-        eventMap[current_cpu][n] = make_pair(tsec,t);
+        eventMap[current_cpu][currentPID][n] = make_pair(tsec,t);
       }
       else {
         // Zeroing the nine bit to make the unique idenfier
-        if(eventMap[current_cpu].find(n & 0b110111111111) != eventMap[current_cpu].end()){
-          callTime = eventMap[current_cpu][n & 0b110111111111];
+        if(eventMap[current_cpu][currentPID].find(n & 0b110111111111) != eventMap[current_cpu][currentPID].end()){
+          callTime = eventMap[current_cpu][currentPID][n & 0b110111111111];
           callFound = true;
         }
         else{
@@ -345,6 +352,20 @@ int main (int argc, const char** argv) {
       string name = string("");
       if (names.find(namelook) != names.end()) {name = names[namelook];}
 
+      if(argc == 3){
+    	  if(n == 0x200){
+			  if(name.compare(string(argv[2])) == 0){  //if a pid name is given, print those only
+				  legalPIDs.insert(currentPID);
+			  }
+    	  }
+      }
+
+      if(argc == 3){
+    	  if(legalPIDs.find(currentPID) == legalPIDs.end()){
+    		  continue;
+    	  }
+      }
+
       if(callFound){
         fprintf(stdout, "[%3d] [%02lld.%02lld ... %02lld.%02lld] %lld %03llx %08llx %s\n", i, callTime.first, callTime.second ,tsec, t, current_cpu, n, arg, name.c_str());
         u64 difft = t - callTime.second;
@@ -362,7 +383,7 @@ int main (int argc, const char** argv) {
         	}
         }
 
-        fprintf(fout,"%lld,%011lld,%011lld,%011lld,%03llx,%s\n",current_cpu, nanoSeconds(callTime.first,callTime.second), nanoSeconds(tsec, t) , nanoSeconds(difftsec, difft) ,n, name.c_str());
+        fprintf(fout,"%lld,%04llx,%011lld,%011lld,%011lld,%03llx,%s\n",current_cpu, currentPID, nanoSeconds(callTime.first,callTime.second), nanoSeconds(tsec, t) , nanoSeconds(difftsec, difft) ,n, name.c_str());
       }
       else{
         fprintf(stdout, "[%3d] [               %02lld.%02lld] %lld %03llx %08llx %s\n", i, tsec, t, current_cpu, n, arg, name.c_str());
