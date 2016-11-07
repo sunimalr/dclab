@@ -13,19 +13,20 @@ function parseTrace(lines){
       	var words = lines[line].split(',');
 
       	// console.log(words);
-      	if(words.length != 6){
-      		console.log("entry length is not 6!, not parsing");
+      	if(words.length != 7){
+      		console.log("entry length is not 7!, not parsing");
       		return;
       	}
 
       	var cpu = parseInt(words[0]);
-      	var starttime = parseInt(words[1]);
-      	var endtime = parseInt(words[2]);
-      	var duration = parseInt(words[3]);
+        var pid = parseInt(words[1],16);
+      	var starttime = parseInt(words[2]);
+      	var endtime = parseInt(words[3]);
+      	var duration = parseInt(words[4]);
         if(duration==0)
           duration=200;
-      	var type = parseInt(words[4],16);//Hex to integer
-      	var name = words[5];
+      	var type = parseInt(words[5],16);//Hex to integer
+      	var name = words[6];
 
       	if(minimumStart>starttime){
       		minimumStart=starttime;
@@ -35,12 +36,18 @@ function parseTrace(lines){
       	}
 
       	if(!(cpu in entries)){
-      		entries[cpu] = [];
+      		entries[cpu] = {}; 
       	}
-      	entries[cpu].push([cpu,starttime,endtime,duration,type,name]);
+
+        if(!(pid in entries[cpu])){
+           entries[cpu][pid] = [];
+        }
+
+      	entries[cpu][pid].push([cpu,starttime,endtime,duration,type,name]);
       	//console.log(starttime);
     }
     console.log(minimumStart);
+    console.log(entries);
     //console.log(minimumStart[0] + " , " + minimumStart[1] + " , " + minimumStart[2] + " , " + minimumStart[3]);
     //console.log("finalpoint : "+maximumStart);
     return entries;
