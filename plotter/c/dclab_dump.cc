@@ -246,6 +246,72 @@ int main (int argc, const char** argv) {
   u64 currentPID = 0;
   set<u64> legalPIDs;
 
+  if(argc == 3){
+	  while (fread(traceblock, 1, sizeof(traceblock), f) != 0) {
+			traceblocks.clear();
+			for (int i = 2; i < kTraceBufSize; ++i) {
+
+			  u64 n = (traceblock[i] >> 32) & 0xfff;
+			  u64 arg = traceblock[i] & 0xffffffff;
+
+			  u64 nameint, namelook;
+			  nameint = ((n & 0x00f) << 8) | arg;	// For storing names
+			  if ((n & 0x00f) == 2) {nameint = 0x10000 | (arg & 0xffff);}
+			  namelook = n;				// For looking up names
+			  if (n == 0x200) {namelook = 0x10000 | (arg & 0xffff);}
+
+			  // Pick out any names
+			  if ((0x010 <= n) && (n <= 0x1ff)) {
+				// We have a name or other variable-length entry
+				char tempstring[64];
+				int len = (n >> 4) & 0x00f;
+				if ((len < 1) || (8 < len)) {continue;}
+				memset(tempstring, 0, 64);
+				memcpy(tempstring, &traceblock[i + 1], (len - 1) * 8);
+				fprintf(stdout, "  %s[%lld] %s\n", kNameName[n & 0x00f], arg, tempstring);
+				names[nameint] = string(tempstring);
+				i += (len - 1);	// Skip over the rest of the name
+				continue;
+			  }
+
+			  traceblock_t temp;
+			  temp.t = traceblock[i] >> 44;
+			  temp.block = traceblock[i];
+			  traceblocks.push_back(temp);
+			}
+			std::sort(traceblocks.begin(),traceblocks.end(),less_than_traceblock_t());
+
+			for (int i = 0; i < traceblocks.size(); ++i) {
+				u64 n = (traceblocks[i].block >> 32) & 0xfff;
+				u64 arg = traceblocks[i].block & 0xffffffff;
+
+				  u64 nameint, namelook;
+				  nameint = ((n & 0x00f) << 8) | arg;	// For storing names
+				  if ((n & 0x00f) == 2) {nameint = 0x10000 | (arg & 0xffff);}
+				  namelook = n;				// For looking up names
+				  namelook = n & 0b110111111111;
+				  if (n == 0x200) {namelook = 0x10000 | (arg & 0xffff);}
+
+			      string name = string("");
+			      if (names.find(namelook) != names.end()) {name = names[namelook];}
+
+
+				if(n == 0x200){
+				  currentPID = arg & 0xffff;
+				  if(name.compare(string(argv[2])) == 0){  //if a pid name is given, print those only
+					  legalPIDs.insert(currentPID);
+				  }
+				}
+			}
+	  }
+
+	  // adding min - 1 which the master thread that invokes the rest
+	  u64 minPID = *std::min_element(legalPIDs.begin(),legalPIDs.end());
+	  legalPIDs.insert(minPID-1);
+
+	  fseek(f,0,SEEK_SET);
+  }
+
   while (fread(traceblock, 1, sizeof(traceblock), f) != 0) {
     fprintf(stdout, "[0] %016llx\n", traceblock[0]);
     fprintf(stdout, "[1] %s\n", FormatUsecDateTime(traceblock[1]));
@@ -351,14 +417,6 @@ int main (int argc, const char** argv) {
       // Nothing else, so dump in hex
       string name = string("");
       if (names.find(namelook) != names.end()) {name = names[namelook];}
-
-      if(argc == 3){
-    	  if(n == 0x200){
-			  if(name.compare(string(argv[2])) == 0){  //if a pid name is given, print those only
-				  legalPIDs.insert(currentPID);
-			  }
-    	  }
-      }
 
       if(argc == 3){
     	  if(legalPIDs.find(currentPID) == legalPIDs.end()){
